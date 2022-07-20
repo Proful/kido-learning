@@ -1,11 +1,13 @@
 import { AppShell, Navbar, Header, Title, Button } from "@mantine/core";
 import { useState } from "react";
+import Division from "./components/Division";
 import MagicClock from "./components/MaagicClock";
 import Multiplication from "./components/Multiplication";
 
 function App() {
   const [showClock, setShowClock] = useState(0);
   const [showMultiplication, setShowMultiplication] = useState(0);
+  const [showDivision, setShowDivision] = useState(0);
 
   return (
     <AppShell
@@ -22,6 +24,7 @@ function App() {
                 onClick={() => {
                   setShowClock(Math.random());
                   setShowMultiplication(0);
+                  setShowDivision(0);
                 }}
               >
                 Clock
@@ -33,9 +36,22 @@ function App() {
                 onClick={() => {
                   setShowMultiplication(Math.random());
                   setShowClock(0);
+                  setShowDivision(0);
                 }}
               >
                 Multiplication
+              </Button>
+            </div>
+            <div>
+              <Button
+                variant="subtle"
+                onClick={() => {
+                  setShowDivision(Math.random());
+                  setShowClock(0);
+                  setShowMultiplication(0);
+                }}
+              >
+                Division
               </Button>
             </div>
           </Navbar.Section>
@@ -55,6 +71,7 @@ function App() {
     >
       {!!showClock && <MagicClock render={showClock} />}
       {!!showMultiplication && <Multiplication render={showMultiplication} />}
+      {!!showDivision && <Division render={showDivision} />}
     </AppShell>
   );
 }

@@ -1,6 +1,5 @@
 import { Radio, RadioGroup } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { getQuizOptions } from "../backend/core";
 import { QuizOption } from "../types";
 
 const Multiplication = ({ render }: { render: number }) => {
