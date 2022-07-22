@@ -2,8 +2,8 @@ import { Radio, RadioGroup } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 import Clock from "react-clock";
 import "react-clock/dist/Clock.css";
-import { getQuizOptions } from "../backend/core";
-import { QuizOption } from "../types";
+import { getQuizOptions } from "../../backend/core";
+import { QuizOption } from "../../types";
 
 const MagicClock = ({ render }: { render: number }) => {
   const [clockDate, setClockDate] = useState<Date | null>(null);

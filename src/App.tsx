@@ -1,61 +1,29 @@
-import { AppShell, Navbar, Header, Title, Button } from "@mantine/core";
+import { AppShell, Header, Title, Button } from "@mantine/core";
 import { useState } from "react";
-import Division from "./components/Division";
-import MagicClock from "./components/MaagicClock";
-import Multiplication from "./components/Multiplication";
+import Division from "./components/features/Division";
+import MagicClock from "./components/features/MagicClock";
+import Multiplication from "./components/features/Multiplication";
+import Navbar from "./components/Navbar";
+import { Features, Feature } from "./types";
+
+const resetFeatures: Features = {
+  [Feature.Clock]: 0,
+  [Feature.Multiplication]: 0,
+  [Feature.Division]: 0,
+};
 
 function App() {
-  const [showClock, setShowClock] = useState(0);
-  const [showMultiplication, setShowMultiplication] = useState(0);
-  const [showDivision, setShowDivision] = useState(0);
+  const [features, setFeatures] = useState<Features>(resetFeatures);
 
   return (
     <AppShell
       padding="md"
       navbar={
-        <Navbar width={{ base: 250 }} height={500} p="xs">
-          <Navbar.Section>
-            <Title order={4}>Features</Title>
-          </Navbar.Section>
-          <Navbar.Section grow mt="md">
-            <div>
-              <Button
-                variant="subtle"
-                onClick={() => {
-                  setShowClock(Math.random());
-                  setShowMultiplication(0);
-                  setShowDivision(0);
-                }}
-              >
-                Clock
-              </Button>
-            </div>
-            <div>
-              <Button
-                variant="subtle"
-                onClick={() => {
-                  setShowMultiplication(Math.random());
-                  setShowClock(0);
-                  setShowDivision(0);
-                }}
-              >
-                Multiplication
-              </Button>
-            </div>
-            <div>
-              <Button
-                variant="subtle"
-                onClick={() => {
-                  setShowDivision(Math.random());
-                  setShowClock(0);
-                  setShowMultiplication(0);
-                }}
-              >
-                Division
-              </Button>
-            </div>
-          </Navbar.Section>
-        </Navbar>
+        <Navbar
+          onFeatureSelected={(feature) =>
+            setFeatures({ ...resetFeatures, [feature]: Math.random() })
+          }
+        />
       }
       header={
         <Header height={60} p="xs">
@@ -69,9 +37,15 @@ function App() {
         },
       })}
     >
-      {!!showClock && <MagicClock render={showClock} />}
-      {!!showMultiplication && <Multiplication render={showMultiplication} />}
-      {!!showDivision && <Division render={showDivision} />}
+      {!!features[Feature.Clock] && (
+        <MagicClock render={features[Feature.Clock]} />
+      )}
+      {!!features[Feature.Multiplication] && (
+        <Multiplication render={features[Feature.Multiplication]} />
+      )}
+      {!!features[Feature.Division] && (
+        <Division render={features[Feature.Division]} />
+      )}
     </AppShell>
   );
 }

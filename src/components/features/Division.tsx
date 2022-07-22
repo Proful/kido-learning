@@ -1,8 +1,19 @@
 import { Text, Paper, Radio, RadioGroup } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { Count, QuizOption } from "../types";
+import { getQuizOptions } from "../../backend/core";
+import { Count, QuizOption } from "../../types";
 
-const Multiplication = ({ render }: { render: number }) => {
+const getRnd = (except: number[]) => {
+  let rnd = Math.floor(Math.random() * 10 + 1);
+
+  while (except.includes(rnd)) {
+    rnd = Math.floor(Math.random() * 10 + 1);
+  }
+
+  return rnd;
+};
+
+const Division = ({ render }: { render: number }) => {
   const [options, setOptions] = useState<QuizOption[]>([]);
   const [color, setColor] = useState("red");
   const [optionSelected, setOptionSelected] = useState("");
@@ -10,58 +21,53 @@ const Multiplication = ({ render }: { render: number }) => {
   const [count, setCount] = useState<Count>({ correct: 0, incorrect: 0 });
 
   const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
+  const [result, setResult] = useState(0);
+  const y = 5;
 
   useEffect(() => {
     setOptionSelected("");
 
-    let rnd = Math.floor(Math.random() * 10 + 1);
-
-    while (rnd === x) {
-      rnd = Math.floor(Math.random() * 10 + 1);
-    }
-
-    setX(rnd);
+    setX(getRnd([x / 5]) * 5);
   }, [render]);
 
   useEffect(() => {
-    let rnd = Math.floor(Math.random() * 10 + 1);
-
-    while (rnd === y) {
-      rnd = Math.floor(Math.random() * 10 + 1);
-    }
-
-    setY(rnd);
+    setResult(x / y);
   }, [x]);
 
   useEffect(() => {
-    let opts = [
-      { value: "A", label: `${x} x ${y} = ${x * y}` },
-      {
-        value: "B",
-        label: `${x} x ${y} = ${Math.floor(Math.random() * (100 - x + 1) + x)}`,
-      },
-      {
-        value: "C",
-        label: `${x} x ${y} = ${Math.floor(Math.random() * (100 - y + 1) + y)}`,
-      },
-      {
-        value: "D",
-        label: `${x} x ${y} = ${Math.floor(Math.random() * (100 - x + 1) + x)}`,
-      },
-    ];
+    if (result !== 0) {
+      let r1 = getRnd([result]);
+      let r2 = getRnd([result, r1]);
+      let r3 = getRnd([result, r1, r2]);
 
-    //shuffle array
-    opts = opts.sort(() => Math.random() - 0.5);
+      let opts = [
+        { value: "A", label: `${x} / ${y} = ${result}` },
+        {
+          value: "B",
+          label: `${x} / ${y} = ${r1}`,
+        },
+        {
+          value: "C",
+          label: `${x} / ${y} = ${r2}`,
+        },
+        {
+          value: "D",
+          label: `${x} / ${y} = ${r3}`,
+        },
+      ];
 
-    setOptions(opts);
-  }, [y]);
+      //shuffle array
+      opts = opts.sort(() => Math.random() - 0.5);
+
+      setOptions(opts);
+    }
+  }, [result]);
 
   return (
     <div>
       <RadioGroup
         orientation="vertical"
-        label={`What is the value of ${x} X ${y}?`}
+        label={`Which of the following  is correct?`}
         spacing="lg"
         size="xl"
         value={optionSelected}
@@ -91,4 +97,4 @@ const Multiplication = ({ render }: { render: number }) => {
   );
 };
 
-export default Multiplication;
+export default Division;
