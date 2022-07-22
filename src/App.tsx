@@ -64,8 +64,8 @@ function App() {
       }
       styles={(theme) => ({
         root: {
-          backgroundColor: theme.colors.gray[2],
-          color: theme.colors.dark[6],
+          backgroundColor: theme.colors.dark[6],
+          color: theme.colors.gray[2],
         },
       })}
     >
