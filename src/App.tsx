@@ -1,47 +1,14 @@
 import { AppShell, Header, Title } from "@mantine/core"
-import { useEffect, useState } from "react"
-import { loadScores, saveScores } from "./backend/core"
+import { useState } from "react"
 import FeatureRenderer from "./components/features/FeatureRenderer"
 import Navbar from "./components/Navbar"
-import { Feature, Scores, Answer } from "./types"
-
-const initScores: Scores = {
-  [Feature.Clock]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
-  [Feature.Multiplication]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
-  [Feature.Division]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
-}
-
-const isEmpty = (scores: Scores) => {
-  return Object.values(scores).every(
-    (score) => score[Answer.Correct] === 0 && score[Answer.Incorrect] === 0
-  )
-}
+import useScores from "./hooks/useScores"
+import { Feature } from "./types"
 
 const App = () => {
   const [feature, setFeature] = useState<Feature>(Feature.Clock)
-  const [scores, setScores] = useState<Scores>(initScores)
   const [seed, setSeed] = useState<number>(0)
-
-  useEffect(() => {
-    loadScores().then(setScores)
-  }, [])
-
-  useEffect(() => {
-    if (!isEmpty(scores)) {
-      //BUG: redundant write first time
-      saveScores(scores)
-    }
-  }, [scores])
-
-  const updateScores = (feature: Feature, answer: Answer) => {
-    setScores({
-      ...scores,
-      [feature]: {
-        ...scores[feature],
-        [answer]: scores[feature][answer] + 1,
-      },
-    })
-  }
+  const { scores, updateScores } = useScores()
 
   return (
     <AppShell

@@ -15,11 +15,6 @@ export enum Feature {
   Multiplication = "multiplication",
   Division = "division",
 }
-export interface Features {
-  [Feature.Clock]: number
-  [Feature.Multiplication]: number
-  [Feature.Division]: number
-}
 export interface Scores {
   [Feature.Clock]: Count
   [Feature.Multiplication]: Count
