@@ -1,14 +1,14 @@
-import * as Mantine from "@mantine/core";
-import { Button, Title } from "@mantine/core";
-import { Feature } from "../types";
+import * as Mantine from "@mantine/core"
+import { Button, Title } from "@mantine/core"
+import { Feature } from "../types"
 
 type NavbarProps = {
-  onFeatureSelected: (feature: Feature) => void;
-};
+  onFeatureSelected: (feature: Feature) => void
+}
 
 const Navbar = ({ onFeatureSelected }: NavbarProps) => {
   return (
-    <Mantine.Navbar width={{ base: 250 }} height={500} p="xs">
+    <Mantine.Navbar width={{ base: 250 }} height={600} p="xs">
       <Mantine.Navbar.Section>
         <Title order={4}>Features</Title>
       </Mantine.Navbar.Section>
@@ -39,7 +39,7 @@ const Navbar = ({ onFeatureSelected }: NavbarProps) => {
         </div>
       </Mantine.Navbar.Section>
     </Mantine.Navbar>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

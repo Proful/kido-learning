@@ -1,47 +1,34 @@
-import { Text, Paper, Radio, RadioGroup } from "@mantine/core";
-import { useEffect, useState } from "react";
-import { Answer, Count, QuizOption } from "../../types";
-
-const getRnd = (except: number[]) => {
-  let rnd = Math.floor(Math.random() * 10 + 1);
-
-  while (except.includes(rnd)) {
-    rnd = Math.floor(Math.random() * 10 + 1);
-  }
-
-  return rnd;
-};
+import { useEffect, useState } from "react"
+import { Answer, Count, QuizOption } from "../../types"
+import { getRnd } from "../../utils"
+import Quiz from "./Quiz"
 
 type DivisionProps = {
-  render: number;
-  count: Count;
-  onAnswer: (answer: Answer) => void;
-};
+  render: number
+  count: Count
+  onAnswer: (answer: Answer) => void
+}
 
 const Division = ({ render, count, onAnswer }: DivisionProps) => {
-  const [options, setOptions] = useState<QuizOption[]>([]);
-  const [color, setColor] = useState("red");
-  const [optionSelected, setOptionSelected] = useState("");
+  const [options, setOptions] = useState<QuizOption[]>([])
 
-  const [x, setX] = useState(0);
-  const [result, setResult] = useState(0);
-  const y = 5;
+  const [x, setX] = useState(0)
+  const [result, setResult] = useState(0)
+  const y = 4
 
   useEffect(() => {
-    setOptionSelected("");
-
-    setX(getRnd([x / 5]) * 5);
-  }, [render]);
+    setX(getRnd([x / y]) * y)
+  }, [render])
 
   useEffect(() => {
-    setResult(x / y);
-  }, [x]);
+    setResult(x / y)
+  }, [x])
 
   useEffect(() => {
     if (result !== 0) {
-      let r1 = getRnd([result]);
-      let r2 = getRnd([result, r1]);
-      let r3 = getRnd([result, r1, r2]);
+      let r1 = getRnd([result])
+      let r2 = getRnd([result, r1])
+      let r3 = getRnd([result, r1, r2])
 
       let opts = [
         { value: "A", label: `${x} / ${y} = ${result}` },
@@ -57,45 +44,18 @@ const Division = ({ render, count, onAnswer }: DivisionProps) => {
           value: "D",
           label: `${x} / ${y} = ${r3}`,
         },
-      ];
+      ]
 
       //shuffle array
-      opts = opts.sort(() => Math.random() - 0.5);
+      opts = opts.sort(() => Math.random() - 0.5)
 
-      setOptions(opts);
+      setOptions(opts)
     }
-  }, [result]);
+  }, [result])
 
   return (
-    <div>
-      <RadioGroup
-        orientation="vertical"
-        label={`Which of the following  is correct?`}
-        spacing="lg"
-        size="xl"
-        value={optionSelected}
-        color={color}
-        onChange={(v) => {
-          setOptionSelected(v);
-          if (v === "A") {
-            onAnswer(Answer.Correct);
-            setColor("teal");
-          } else {
-            onAnswer(Answer.Incorrect);
-            setColor("red");
-          }
-        }}
-      >
-        {options.map((option, index) => (
-          <Radio key={index} value={option.value} label={option.label} />
-        ))}
-      </RadioGroup>
-      <Paper shadow="md" p="md" mt={"md"} style={{ width: 400 }}>
-        <Text>{count[Answer.Correct]} Correct</Text>
-        <Text>{count[Answer.Incorrect]} Wrong</Text>
-      </Paper>
-    </div>
-  );
-};
+    <Quiz render={render} count={count} options={options} onAnswer={onAnswer} />
+  )
+}
 
-export default Division;
+export default Division

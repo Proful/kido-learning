@@ -1,43 +1,40 @@
-import { Paper, Radio, RadioGroup, Text } from "@mantine/core";
-import { useEffect, useRef, useState } from "react";
-import Clock from "react-clock";
-import "react-clock/dist/Clock.css";
-import { getQuizOptions } from "../../backend/core";
-import { QuizOption, Count, Answer } from "../../types";
+import { useEffect, useState } from "react"
+import Clock from "react-clock"
+import "react-clock/dist/Clock.css"
+import { getQuizOptions } from "../../backend/core"
+import { QuizOption, Count, Answer } from "../../types"
+import Quiz from "./Quiz"
 
 type MagicClockProps = {
-  render: number;
-  count: Count;
-  onAnswer: (answer: Answer) => void;
-};
+  render: number
+  count: Count
+  onAnswer: (answer: Answer) => void
+}
 
 const MagicClock = ({ render, count, onAnswer }: MagicClockProps) => {
-  const [clockDate, setClockDate] = useState<Date | null>(null);
-  const [options, setOptions] = useState<QuizOption[]>([]);
-  const [color, setColor] = useState("red");
-  const [optionSelected, setOptionSelected] = useState("");
+  const [clockDate, setClockDate] = useState<Date | null>(null)
+  const [options, setOptions] = useState<QuizOption[]>([])
 
   useEffect(() => {
-    setOptionSelected("");
     getQuizOptions().then((opts) => {
-      setOptions(opts);
+      setOptions(opts)
 
-      const correct = opts.find((o) => o.value === "A");
+      const correct = opts.find((o) => o.value === "A")
 
       if (correct) {
-        let d = new Date();
-        let [hr, mm] = correct.label.split(":");
+        let d = new Date()
+        let [hr, mm] = correct.label.split(":")
 
-        d.setHours(parseInt(hr));
-        d.setMinutes(parseInt(mm));
+        d.setHours(parseInt(hr))
+        d.setMinutes(parseInt(mm))
 
-        setClockDate(d);
+        setClockDate(d)
       }
-    });
-  }, [render]);
+    })
+  }, [render])
 
   if (!clockDate) {
-    return null;
+    return null
   }
 
   return (
@@ -45,34 +42,14 @@ const MagicClock = ({ render, count, onAnswer }: MagicClockProps) => {
       <Clock value={clockDate} renderSecondHand={false} renderNumbers={false} />
       <br />
 
-      <RadioGroup
-        orientation="vertical"
-        label="What is the time now?"
-        spacing="lg"
-        size="xl"
-        value={optionSelected}
-        color={color}
-        onChange={(v) => {
-          setOptionSelected(v);
-          if (v === "A") {
-            onAnswer(Answer.Correct);
-            setColor("teal");
-          } else {
-            onAnswer(Answer.Incorrect);
-            setColor("red");
-          }
-        }}
-      >
-        {options.map((option, index) => (
-          <Radio key={index} value={option.value} label={option.label} />
-        ))}
-      </RadioGroup>
-      <Paper shadow="md" p="md" mt={"md"} style={{ width: 400 }}>
-        <Text>{count[Answer.Correct]} Correct</Text>
-        <Text>{count[Answer.Incorrect]} Wrong</Text>
-      </Paper>
+      <Quiz
+        render={render}
+        count={count}
+        options={options}
+        onAnswer={onAnswer}
+      />
     </div>
-  );
-};
+  )
+}
 
-export default MagicClock;
+export default MagicClock

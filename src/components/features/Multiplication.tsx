@@ -1,96 +1,59 @@
-import { Text, Paper, Radio, RadioGroup } from "@mantine/core";
-import { useEffect, useState } from "react";
-import { Answer, Count, QuizOption } from "../../types";
+import { useEffect, useState } from "react"
+import { Answer, Count, QuizOption } from "../../types"
+import Quiz from "./Quiz"
+import { getRnd, getRndInRange } from "../../utils"
 
 type MultiplicationProps = {
-  render: number;
-  count: Count;
-  onAnswer: (answer: Answer) => void;
-};
+  render: number
+  count: Count
+  onAnswer: (answer: Answer) => void
+}
 
 const Multiplication = ({ render, count, onAnswer }: MultiplicationProps) => {
-  const [options, setOptions] = useState<QuizOption[]>([]);
-  const [color, setColor] = useState("red");
-  const [optionSelected, setOptionSelected] = useState("");
+  const [options, setOptions] = useState<QuizOption[]>([])
 
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
+  const [x, setX] = useState(0)
+  const [y, setY] = useState(0)
 
   useEffect(() => {
-    setOptionSelected("");
-
-    let rnd = Math.floor(Math.random() * 10 + 1);
-
-    while (rnd === x) {
-      rnd = Math.floor(Math.random() * 10 + 1);
-    }
-
-    setX(rnd);
-  }, [render]);
+    setX(getRnd([x]))
+  }, [render])
 
   useEffect(() => {
-    let rnd = Math.floor(Math.random() * 10 + 1);
-
-    while (rnd === y) {
-      rnd = Math.floor(Math.random() * 10 + 1);
-    }
-
-    setY(rnd);
-  }, [x]);
+    setY(getRnd([y]))
+  }, [x])
 
   useEffect(() => {
+    let result = x * y
+    let r1 = getRndInRange(100, x, [result])
+    let r2 = getRndInRange(100, y, [result, r1])
+    let r3 = getRndInRange(100, x, [result, r1, r2])
+
     let opts = [
-      { value: "A", label: `${x} x ${y} = ${x * y}` },
+      { value: "A", label: `${x} x ${y} = ${result}` },
       {
         value: "B",
-        label: `${x} x ${y} = ${Math.floor(Math.random() * (100 - x + 1) + x)}`,
+        label: `${x} x ${y} = ${r1}`,
       },
       {
         value: "C",
-        label: `${x} x ${y} = ${Math.floor(Math.random() * (100 - y + 1) + y)}`,
+        label: `${x} x ${y} = ${r2}`,
       },
       {
         value: "D",
-        label: `${x} x ${y} = ${Math.floor(Math.random() * (100 - x + 1) + x)}`,
+        label: `${x} x ${y} = ${r3}`,
       },
-    ];
+    ]
 
     //shuffle array
-    opts = opts.sort(() => Math.random() - 0.5);
+    opts = opts.sort(() => Math.random() - 0.5)
 
-    setOptions(opts);
-  }, [y]);
+    setOptions(opts)
+  }, [y])
 
   return (
-    <div>
-      <RadioGroup
-        orientation="vertical"
-        label={`What is the value of ${x} X ${y}?`}
-        spacing="lg"
-        size="xl"
-        value={optionSelected}
-        color={color}
-        onChange={(v) => {
-          setOptionSelected(v);
-          if (v === "A") {
-            onAnswer(Answer.Correct);
-            setColor("teal");
-          } else {
-            onAnswer(Answer.Incorrect);
-            setColor("red");
-          }
-        }}
-      >
-        {options.map((option, index) => (
-          <Radio key={index} value={option.value} label={option.label} />
-        ))}
-      </RadioGroup>
-      <Paper shadow="md" p="md" mt={"md"} style={{ width: 400 }}>
-        <Text>{count[Answer.Correct]} Correct</Text>
-        <Text>{count[Answer.Incorrect]} Wrong</Text>
-      </Paper>
-    </div>
-  );
-};
+    <Quiz render={render} count={count} options={options} onAnswer={onAnswer} />
+  )
+}
 
-export default Multiplication;
+export default Multiplication

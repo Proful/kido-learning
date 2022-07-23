@@ -1,46 +1,37 @@
-import { AppShell, Header, Title, Button } from "@mantine/core";
-import { useEffect, useState } from "react";
-import { loadScores, saveScores } from "./backend/core";
-import Division from "./components/features/Division";
-import MagicClock from "./components/features/MagicClock";
-import Multiplication from "./components/features/Multiplication";
-import Navbar from "./components/Navbar";
-import { Features, Feature, Scores, Answer } from "./types";
-
-const initFeatures: Features = {
-  [Feature.Clock]: 0,
-  [Feature.Multiplication]: 0,
-  [Feature.Division]: 0,
-};
+import { AppShell, Header, Title } from "@mantine/core"
+import { useEffect, useState } from "react"
+import { loadScores, saveScores } from "./backend/core"
+import FeatureRenderer from "./components/features/FeatureRenderer"
+import Navbar from "./components/Navbar"
+import { Feature, Scores, Answer } from "./types"
 
 const initScores: Scores = {
-  [Feature.Clock]: { correct: 0, incorrect: 0 },
-  [Feature.Multiplication]: { correct: 0, incorrect: 0 },
-  [Feature.Division]: { correct: 0, incorrect: 0 },
-};
+  [Feature.Clock]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
+  [Feature.Multiplication]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
+  [Feature.Division]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
+}
 
 const isEmpty = (scores: Scores) => {
   return Object.values(scores).every(
-    (score) => score.correct === 0 && score.incorrect === 0
-  );
-};
+    (score) => score[Answer.Correct] === 0 && score[Answer.Incorrect] === 0
+  )
+}
 
 const App = () => {
-  const [features, setFeatures] = useState<Features>(initFeatures);
-  const [scores, setScores] = useState<Scores>(initScores);
+  const [feature, setFeature] = useState<Feature>(Feature.Clock)
+  const [scores, setScores] = useState<Scores>(initScores)
+  const [seed, setSeed] = useState<number>(0)
 
   useEffect(() => {
-    console.log("read from file");
-    loadScores().then(setScores);
-  }, []);
+    loadScores().then(setScores)
+  }, [])
 
   useEffect(() => {
-    console.log("scores updates..", scores);
     if (!isEmpty(scores)) {
       //BUG: redundant write first time
-      saveScores(scores);
+      saveScores(scores)
     }
-  }, [scores]);
+  }, [scores])
 
   const updateScores = (feature: Feature, answer: Answer) => {
     setScores({
@@ -49,17 +40,18 @@ const App = () => {
         ...scores[feature],
         [answer]: scores[feature][answer] + 1,
       },
-    });
-  };
+    })
+  }
 
   return (
     <AppShell
       padding="md"
       navbar={
         <Navbar
-          onFeatureSelected={(feature) =>
-            setFeatures({ ...initFeatures, [feature]: Math.random() })
-          }
+          onFeatureSelected={(feature) => {
+            setFeature(feature)
+            setSeed(Math.random())
+          }}
         />
       }
       header={
@@ -74,29 +66,9 @@ const App = () => {
         },
       })}
     >
-      {features[Feature.Clock] !== 0 && (
-        <MagicClock
-          render={features[Feature.Clock]}
-          count={scores[Feature.Clock]}
-          onAnswer={(answer) => updateScores(Feature.Clock, answer)}
-        />
-      )}
-      {features[Feature.Multiplication] !== 0 && (
-        <Multiplication
-          render={features[Feature.Multiplication]}
-          count={scores[Feature.Multiplication]}
-          onAnswer={(answer) => updateScores(Feature.Multiplication, answer)}
-        />
-      )}
-      {features[Feature.Division] !== 0 && (
-        <Division
-          render={features[Feature.Division]}
-          count={scores[Feature.Division]}
-          onAnswer={(answer) => updateScores(Feature.Division, answer)}
-        />
-      )}
+      <FeatureRenderer {...{ feature, seed, scores, updateScores }} />
     </AppShell>
-  );
-};
+  )
+}
 
-export default App;
+export default App
