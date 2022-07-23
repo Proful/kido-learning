@@ -1,5 +1,5 @@
 import { useCallback } from "react"
-import { Answer, Feature, Scores } from "../../types"
+import { Answer, Feature, Scores } from "../../shared/types"
 import Division from "./Division"
 import MagicClock from "./MagicClock"
 import Multiplication from "./Multiplication"

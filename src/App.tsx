@@ -2,8 +2,8 @@ import { AppShell, Header, Title } from "@mantine/core"
 import { useState } from "react"
 import FeatureRenderer from "./components/features/FeatureRenderer"
 import Navbar from "./components/Navbar"
-import useScores from "./hooks/useScores"
-import { Feature } from "./types"
+import useScores from "./shared/useScores"
+import { Feature } from "./shared/types"
 
 const App = () => {
   const [feature, setFeature] = useState<Feature>(Feature.Clock)

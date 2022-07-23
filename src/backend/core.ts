@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api"
-import { QuizOption, Scores } from "../types"
+import { QuizOption, Scores } from "../shared/types"
 
 const getQuizOptions = async (): Promise<QuizOption[]> => {
   const result = (await invoke("gen_quiz_options")) as QuizOption[]

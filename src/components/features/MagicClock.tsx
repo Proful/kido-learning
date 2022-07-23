@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Clock from "react-clock"
 import "react-clock/dist/Clock.css"
 import { getQuizOptions } from "../../backend/core"
-import { QuizOption, Count, Answer } from "../../types"
+import { QuizOption, Count, Answer } from "../../shared/types"
 import Quiz from "./Quiz"
 
 type MagicClockProps = {

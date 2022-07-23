@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { loadScores, saveScores } from "../backend/core"
-import { Answer, Feature, Scores } from "../types"
+import { Answer, Feature, Scores } from "./types"
 
 const initScores: Scores = {
   [Feature.Clock]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },

@@ -1,6 +1,6 @@
 import * as Mantine from "@mantine/core"
 import { Button, Title } from "@mantine/core"
-import { Feature } from "../types"
+import { Feature } from "../shared/types"
 
 type NavbarProps = {
   onFeatureSelected: (feature: Feature) => void

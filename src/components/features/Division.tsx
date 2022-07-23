@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { Answer, Count, QuizOption } from "../../types"
-import { getRnd } from "../../utils"
+import { Answer, Count, QuizOption } from "../../shared/types"
+import { getRnd } from "../../shared/utils"
 import Quiz from "./Quiz"
 
 type DivisionProps = {

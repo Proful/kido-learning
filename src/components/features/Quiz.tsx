@@ -1,6 +1,6 @@
 import { Paper, Text, RadioGroup, Radio } from "@mantine/core"
 import { useEffect, useState } from "react"
-import { Answer, Count, QuizOption } from "../../types"
+import { Answer, Count, QuizOption } from "../../shared/types"
 
 type QuizProps = {
   render: number

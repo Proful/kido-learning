@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import { Answer, Count, QuizOption } from "../../types"
+import { Answer, Count, QuizOption } from "../../shared/types"
 import Quiz from "./Quiz"
-import { getRnd, getRndInRange } from "../../utils"
+import { getRnd, getRndInRange } from "../../shared/utils"
 
 type MultiplicationProps = {
   render: number
