@@ -2,6 +2,13 @@ import { Paper, Text, RadioGroup, Radio } from "@mantine/core"
 import { useEffect, useState } from "react"
 import { Answer, Count, QuizOption } from "../../shared/types"
 
+const initDisabled = {
+  "A": false,
+  "B": false,
+  "C": false,
+  "D": false,
+}
+
 type QuizProps = {
   render: number
   count: Count
@@ -12,8 +19,10 @@ type QuizProps = {
 const Quiz = ({ render, count, options, onAnswer }: QuizProps) => {
   const [color, setColor] = useState("")
   const [optionSelected, setOptionSelected] = useState("")
+  const [disabled, setDisabled] = useState(initDisabled)
 
   useEffect(() => {
+    setDisabled(initDisabled)
     setOptionSelected("")
   }, [render])
 
@@ -29,6 +38,7 @@ const Quiz = ({ render, count, options, onAnswer }: QuizProps) => {
         onChange={(v) => {
           setOptionSelected(v)
           if (v === "A") {
+            setDisabled({ "A": false, "B": true, "C": true, "D": true })
             onAnswer(Answer.Correct)
             setColor("teal")
           } else {
@@ -38,7 +48,12 @@ const Quiz = ({ render, count, options, onAnswer }: QuizProps) => {
         }}
       >
         {options.map((option, index) => (
-          <Radio key={index} value={option.value} label={option.label} />
+          <Radio
+            key={index}
+            value={option.value}
+            label={option.label}
+            disabled={disabled[option.value as keyof typeof disabled]}
+          />
         ))}
       </RadioGroup>
       <Paper shadow="md" p="md" mt={"md"} style={{ width: 400 }}>
