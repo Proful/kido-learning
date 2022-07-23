@@ -1,7 +1,6 @@
 import { Text, Paper, Radio, RadioGroup } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { getQuizOptions } from "../../backend/core";
-import { Count, QuizOption } from "../../types";
+import { Answer, Count, QuizOption } from "../../types";
 
 const getRnd = (except: number[]) => {
   let rnd = Math.floor(Math.random() * 10 + 1);
@@ -13,12 +12,16 @@ const getRnd = (except: number[]) => {
   return rnd;
 };
 
-const Division = ({ render }: { render: number }) => {
+type DivisionProps = {
+  render: number;
+  count: Count;
+  onAnswer: (answer: Answer) => void;
+};
+
+const Division = ({ render, count, onAnswer }: DivisionProps) => {
   const [options, setOptions] = useState<QuizOption[]>([]);
   const [color, setColor] = useState("red");
   const [optionSelected, setOptionSelected] = useState("");
-
-  const [count, setCount] = useState<Count>({ correct: 0, incorrect: 0 });
 
   const [x, setX] = useState(0);
   const [result, setResult] = useState(0);
@@ -75,10 +78,10 @@ const Division = ({ render }: { render: number }) => {
         onChange={(v) => {
           setOptionSelected(v);
           if (v === "A") {
-            setCount({ ...count, correct: count.correct + 1 });
+            onAnswer(Answer.Correct);
             setColor("teal");
           } else {
-            setCount({ ...count, incorrect: count.incorrect + 1 });
+            onAnswer(Answer.Incorrect);
             setColor("red");
           }
         }}
@@ -87,12 +90,10 @@ const Division = ({ render }: { render: number }) => {
           <Radio key={index} value={option.value} label={option.label} />
         ))}
       </RadioGroup>
-      {count && (
-        <Paper shadow="md" p="md" mt={"md"} style={{ width: 400 }}>
-          <Text>{count.correct} Correct</Text>
-          <Text>{count.incorrect} Wrong</Text>
-        </Paper>
-      )}
+      <Paper shadow="md" p="md" mt={"md"} style={{ width: 400 }}>
+        <Text>{count[Answer.Correct]} Correct</Text>
+        <Text>{count[Answer.Incorrect]} Wrong</Text>
+      </Paper>
     </div>
   );
 };

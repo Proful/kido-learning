@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api";
-import { QuizOption } from "../types";
+import { QuizOption, Scores } from "../types";
 
 const getQuizOptions = async (): Promise<QuizOption[]> => {
   const result = (await invoke("gen_quiz_options")) as QuizOption[];
@@ -7,4 +7,14 @@ const getQuizOptions = async (): Promise<QuizOption[]> => {
   return result;
 };
 
-export { getQuizOptions };
+const loadScores = async (): Promise<Scores> => {
+  const result = (await invoke("load_scores")) as Scores;
+
+  return result;
+};
+
+const saveScores = async (scores: Scores) => {
+  await invoke("save_scores", { scores: scores });
+};
+
+export { getQuizOptions, loadScores, saveScores };

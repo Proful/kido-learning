@@ -1,11 +1,17 @@
-import { Radio, RadioGroup } from "@mantine/core";
+import { Paper, Radio, RadioGroup, Text } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 import Clock from "react-clock";
 import "react-clock/dist/Clock.css";
 import { getQuizOptions } from "../../backend/core";
-import { QuizOption } from "../../types";
+import { QuizOption, Count, Answer } from "../../types";
 
-const MagicClock = ({ render }: { render: number }) => {
+type MagicClockProps = {
+  render: number;
+  count: Count;
+  onAnswer: (answer: Answer) => void;
+};
+
+const MagicClock = ({ render, count, onAnswer }: MagicClockProps) => {
   const [clockDate, setClockDate] = useState<Date | null>(null);
   const [options, setOptions] = useState<QuizOption[]>([]);
   const [color, setColor] = useState("red");
@@ -35,7 +41,7 @@ const MagicClock = ({ render }: { render: number }) => {
   }
 
   return (
-    <>
+    <div>
       <Clock value={clockDate} renderSecondHand={false} renderNumbers={false} />
       <br />
 
@@ -49,8 +55,10 @@ const MagicClock = ({ render }: { render: number }) => {
         onChange={(v) => {
           setOptionSelected(v);
           if (v === "A") {
+            onAnswer(Answer.Correct);
             setColor("teal");
           } else {
+            onAnswer(Answer.Incorrect);
             setColor("red");
           }
         }}
@@ -59,7 +67,11 @@ const MagicClock = ({ render }: { render: number }) => {
           <Radio key={index} value={option.value} label={option.label} />
         ))}
       </RadioGroup>
-    </>
+      <Paper shadow="md" p="md" mt={"md"} style={{ width: 400 }}>
+        <Text>{count[Answer.Correct]} Correct</Text>
+        <Text>{count[Answer.Incorrect]} Wrong</Text>
+      </Paper>
+    </div>
   );
 };
 

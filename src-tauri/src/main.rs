@@ -3,40 +3,25 @@
     windows_subsystem = "windows"
 )]
 
-use rand::{prelude::SliceRandom, Rng};
-use serde::Serialize;
+use std::fs;
+
+use model::{QuizOption, Scores};
+use rand::prelude::SliceRandom;
 use tauri::generate_handler;
+use utils::hh_mm_pair;
+
+mod model;
+mod utils;
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(generate_handler![gen_quiz_options])
+        .invoke_handler(generate_handler![
+            gen_quiz_options,
+            load_scores,
+            save_scores
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
-}
-
-#[derive(Debug, Serialize)]
-struct QuizOption {
-    value: String,
-    label: String,
-}
-
-fn hh_mm_pair() -> String {
-    let mut rng = rand::thread_rng();
-
-    let (n1, n2) = (rng.gen_range(0..=11), rng.gen_range(0..=59));
-
-    let n1 = if n1 < 10 {
-        format!("0{n1}")
-    } else {
-        format!("{n1}")
-    };
-    let n2 = if n2 < 10 {
-        format!("0{n2}")
-    } else {
-        format!("{n2}")
-    };
-
-    format!("{n1}:{n2}")
 }
 
 #[tauri::command]
@@ -64,12 +49,53 @@ fn gen_quiz_options() -> Vec<QuizOption> {
     opts
 }
 
+#[tauri::command]
+fn load_scores() -> Scores {
+    let scores = if let Ok(scores) = fs::read_to_string("/tmp/scores.json") {
+        serde_json::from_str(&scores).unwrap_or(Scores::default())
+    } else {
+        Scores::default()
+    };
+
+    scores
+}
+
+#[tauri::command]
+fn save_scores(scores: Scores) {
+    let scores = serde_json::to_string(&scores).unwrap();
+    fs::write("/tmp/scores.json", scores).unwrap();
+}
+
 #[cfg(test)]
 mod tests {
+    use crate::model::{Count, Scores};
+
     #[test]
     fn test_gen_options() {
         let opts = crate::gen_quiz_options();
         assert_eq!(opts.len(), 4);
         dbg!(opts);
+    }
+    #[test]
+    fn test_load_scores() {
+        let scores = crate::load_scores();
+        dbg!(scores);
+    }
+    #[test]
+    fn test_save_scores() {
+        crate::save_scores(Scores {
+            clock: Count {
+                correct: 20,
+                incorrect: 0,
+            },
+            multiplication: Count {
+                correct: 0,
+                incorrect: 10,
+            },
+            division: Count {
+                correct: 20,
+                incorrect: 30,
+            },
+        });
     }
 }

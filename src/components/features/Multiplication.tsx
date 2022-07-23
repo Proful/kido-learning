@@ -1,13 +1,17 @@
 import { Text, Paper, Radio, RadioGroup } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { Count, QuizOption } from "../../types";
+import { Answer, Count, QuizOption } from "../../types";
 
-const Multiplication = ({ render }: { render: number }) => {
+type MultiplicationProps = {
+  render: number;
+  count: Count;
+  onAnswer: (answer: Answer) => void;
+};
+
+const Multiplication = ({ render, count, onAnswer }: MultiplicationProps) => {
   const [options, setOptions] = useState<QuizOption[]>([]);
   const [color, setColor] = useState("red");
   const [optionSelected, setOptionSelected] = useState("");
-
-  const [count, setCount] = useState<Count>({ correct: 0, incorrect: 0 });
 
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
@@ -69,10 +73,10 @@ const Multiplication = ({ render }: { render: number }) => {
         onChange={(v) => {
           setOptionSelected(v);
           if (v === "A") {
-            setCount({ ...count, correct: count.correct + 1 });
+            onAnswer(Answer.Correct);
             setColor("teal");
           } else {
-            setCount({ ...count, incorrect: count.incorrect + 1 });
+            onAnswer(Answer.Incorrect);
             setColor("red");
           }
         }}
@@ -81,12 +85,10 @@ const Multiplication = ({ render }: { render: number }) => {
           <Radio key={index} value={option.value} label={option.label} />
         ))}
       </RadioGroup>
-      {count && (
-        <Paper shadow="md" p="md" mt={"md"} style={{ width: 400 }}>
-          <Text>{count.correct} Correct</Text>
-          <Text>{count.incorrect} Wrong</Text>
-        </Paper>
-      )}
+      <Paper shadow="md" p="md" mt={"md"} style={{ width: 400 }}>
+        <Text>{count[Answer.Correct]} Correct</Text>
+        <Text>{count[Answer.Incorrect]} Wrong</Text>
+      </Paper>
     </div>
   );
 };
