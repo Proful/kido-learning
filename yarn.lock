@@ -1316,6 +1316,11 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
+tabler-icons-react@^1.53.0:
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/tabler-icons-react/-/tabler-icons-react-1.53.0.tgz#abff11951e9f8637174f48c3c3433f6d7bd8c5dc"
+  integrity sha512-48csX1qiZaXK0yPgNmvkgsZSyqxBU0AVGGzT4DXh1CVEcTkKF39rQP7EeLYeTGeCnM2Ot9tSiKfay1FLOzr0Rg==
+
 through2@~0.4.1:
   version "0.4.2"
   resolved "https://registry.npmjs.org/through2/-/through2-0.4.2.tgz"

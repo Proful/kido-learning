@@ -4,11 +4,13 @@ import FeatureRenderer from "./components/features/FeatureRenderer"
 import Navbar from "./components/Navbar"
 import useScores from "./shared/useScores"
 import { Feature } from "./shared/types"
+import Settings from "./components/Settings"
 
 const App = () => {
   const [feature, setFeature] = useState<Feature>(Feature.Clock)
-  const [seed, setSeed] = useState<number>(0)
-  const { scores, updateScores } = useScores()
+  const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false)
+  const [seed, setSeed] = useState<number>(0) //Re-render the quiz options
+  const [scores, updateScores] = useScores()
 
   return (
     <AppShell
@@ -18,6 +20,10 @@ const App = () => {
           onFeatureSelected={(feature) => {
             setFeature(feature)
             setSeed(Math.random())
+            setIsSettingsOpen(false)
+          }}
+          onSettingsClicked={() => {
+            setIsSettingsOpen(true)
           }}
         />
       }
@@ -33,7 +39,10 @@ const App = () => {
         },
       })}
     >
-      <FeatureRenderer {...{ feature, seed, scores, updateScores }} />
+      {!isSettingsOpen && (
+        <FeatureRenderer {...{ feature, seed, scores, updateScores }} />
+      )}
+      {isSettingsOpen && <Settings />}
     </AppShell>
   )
 }

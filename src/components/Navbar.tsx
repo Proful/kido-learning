@@ -1,16 +1,23 @@
 import * as Mantine from "@mantine/core"
-import { Button, Title } from "@mantine/core"
+import { ActionIcon, Button, Group, Title } from "@mantine/core"
 import { Feature } from "../shared/types"
+import { Settings } from "tabler-icons-react"
 
 type NavbarProps = {
   onFeatureSelected: (feature: Feature) => void
+  onSettingsClicked: () => void
 }
 
-const Navbar = ({ onFeatureSelected }: NavbarProps) => {
+const Navbar = ({ onFeatureSelected, onSettingsClicked }: NavbarProps) => {
   return (
-    <Mantine.Navbar width={{ base: 250 }} height={600} p="xs">
+    <Mantine.Navbar width={{ base: 250, sm: 200, lg: 300 }} height={600} p="xs">
       <Mantine.Navbar.Section>
-        <Title order={4}>Features</Title>
+        <Group position="apart">
+          <Title order={4}>Features</Title>
+          <ActionIcon variant="transparent" onClick={onSettingsClicked}>
+            <Settings size={16} />
+          </ActionIcon>
+        </Group>
       </Mantine.Navbar.Section>
       <Mantine.Navbar.Section grow mt="md">
         <div>

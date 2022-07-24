@@ -14,7 +14,7 @@ const isEmpty = (scores: Scores) => {
   )
 }
 
-const useScores = () => {
+const useScores = (): [Scores, (feature: Feature, answer: Answer) => void] => {
   const [scores, setScores] = useState<Scores>(initScores)
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const useScores = () => {
     })
   }
 
-  return { scores, updateScores }
+  return [scores, updateScores]
 }
 
 export default useScores
