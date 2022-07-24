@@ -5,7 +5,7 @@
 
 use std::fs;
 
-use model::{QuizOption, Scores};
+use model::{QuizOption, Scores, Settings};
 use rand::prelude::SliceRandom;
 use tauri::generate_handler;
 use utils::hh_mm_pair;
@@ -18,7 +18,8 @@ fn main() {
         .invoke_handler(generate_handler![
             gen_quiz_options,
             load_scores,
-            save_scores
+            save_scores,
+            save_settings
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -64,6 +65,12 @@ fn load_scores() -> Scores {
 fn save_scores(scores: Scores) {
     let scores = serde_json::to_string(&scores).unwrap();
     fs::write("/tmp/scores.json", scores).unwrap();
+}
+
+#[tauri::command]
+fn save_settings(settings: Settings) {
+    let settings = serde_json::to_string(&settings).unwrap();
+    fs::write("/tmp/settings.json", settings).unwrap();
 }
 
 #[cfg(test)]

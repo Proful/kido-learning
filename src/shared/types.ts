@@ -14,9 +14,13 @@ export enum Feature {
   Clock = "clock",
   Multiplication = "multiplication",
   Division = "division",
+  Addition = "addition",
 }
 export interface Scores {
   [Feature.Clock]: Count
   [Feature.Multiplication]: Count
   [Feature.Division]: Count
+}
+export interface Settings {
+  denominator: number
 }

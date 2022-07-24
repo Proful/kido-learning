@@ -1,16 +1,13 @@
 import { createContext, useContext } from "react"
+import { Settings } from "./types"
 
-interface SettingsState {
-  denominator: number
-}
-
-export const initialSettingsState: SettingsState = {
+export const initialSettingsState: Settings = {
   denominator: 5,
 }
 
 type SettingsContext = [
-  SettingsState,
-  React.Dispatch<React.SetStateAction<SettingsState>>
+  Settings,
+  React.Dispatch<React.SetStateAction<Settings>>
 ]
 
 const settingsContext = createContext<SettingsContext>([

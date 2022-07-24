@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useSettings } from "../../shared/settingsContext"
 import { Answer, Count, QuizOption } from "../../shared/types"
 import { getRnd } from "../../shared/utils"
 import Quiz from "./Quiz"
@@ -11,17 +12,17 @@ type DivisionProps = {
 
 const Division = ({ render, count, onAnswer }: DivisionProps) => {
   const [options, setOptions] = useState<QuizOption[]>([])
+  const [settings, setSettings] = useSettings()
 
   const [x, setX] = useState(0)
   const [result, setResult] = useState(0)
-  const y = 4
 
   useEffect(() => {
-    setX(getRnd([x / y]) * y)
+    setX(getRnd([x / settings.denominator]) * settings.denominator)
   }, [render])
 
   useEffect(() => {
-    setResult(x / y)
+    setResult(x / settings.denominator)
   }, [x])
 
   useEffect(() => {
@@ -31,18 +32,18 @@ const Division = ({ render, count, onAnswer }: DivisionProps) => {
       let r3 = getRnd([result, r1, r2])
 
       let opts = [
-        { value: "A", label: `${x} / ${y} = ${result}` },
+        { value: "A", label: `${x} / ${settings.denominator} = ${result}` },
         {
           value: "B",
-          label: `${x} / ${y} = ${r1}`,
+          label: `${x} / ${settings.denominator} = ${r1}`,
         },
         {
           value: "C",
-          label: `${x} / ${y} = ${r2}`,
+          label: `${x} / ${settings.denominator} = ${r2}`,
         },
         {
           value: "D",
-          label: `${x} / ${y} = ${r3}`,
+          label: `${x} / ${settings.denominator} = ${r3}`,
         },
       ]
 

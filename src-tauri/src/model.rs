@@ -18,3 +18,8 @@ pub struct Scores {
     pub multiplication: Count,
     pub division: Count,
 }
+
+#[derive(Debug, Serialize, Deserialize, Default)]
+pub struct Settings {
+    pub denominator: u32,
+}

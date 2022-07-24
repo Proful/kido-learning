@@ -6,10 +6,10 @@ import {
 } from "./shared/settingsContext"
 
 const AppWrapper = () => {
-  const settingsContext = useState(initialSettingsState)
+  const [settings, setSettings] = useState(initialSettingsState)
 
   return (
-    <SettingsProvider value={settingsContext}>
+    <SettingsProvider value={[settings, setSettings]}>
       <App />
     </SettingsProvider>
   )
