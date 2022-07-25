@@ -7,7 +7,7 @@ type AdditionProps = {
   render: number
 }
 const options = {
-  size: 7,
+  size: 3,
   smoothing: 0.5,
   thinning: 0.5,
   streamline: 0.5,
@@ -121,7 +121,7 @@ const Addition = ({ render }: AdditionProps) => {
           top: 150,
           left: 100,
           width: "100%",
-          height: "300px",
+          height: "400px",
           // backgroundColor: "#ffffff",
           touchAction: "none",
         }}

@@ -15,6 +15,7 @@ const Settings = () => {
       <TextInput
         value={settings.denominator}
         label="Denominator"
+        style={{ width: "32%" }}
         onChange={(e) =>
           setSettings({ ...settings, denominator: +e.target.value })
         }

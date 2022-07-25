@@ -10,7 +10,7 @@ type NavbarProps = {
 
 const Navbar = ({ onFeatureSelected, onSettingsClicked }: NavbarProps) => {
   return (
-    <Mantine.Navbar width={{ base: 250, sm: 200, lg: 300 }} height={600} p="xs">
+    <Mantine.Navbar width={{ base: 250, sm: 200, lg: 300 }} height={700} p="xs">
       <Mantine.Navbar.Section>
         <Group position="apart">
           <Title order={4}>Features</Title>
