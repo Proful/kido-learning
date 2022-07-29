@@ -20,7 +20,9 @@ export interface Scores {
   [Feature.Clock]: Count
   [Feature.Multiplication]: Count
   [Feature.Division]: Count
+  [Feature.Addition]: Count
 }
 export interface Settings {
   denominator: number
+  operation: string
 }

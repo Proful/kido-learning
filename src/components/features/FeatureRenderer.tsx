@@ -1,6 +1,6 @@
 import { useCallback } from "react"
 import { Answer, Feature, Scores } from "../../shared/types"
-import Addition from "./Addition"
+import AddSub from "./AddSub"
 import Division from "./Division"
 import MagicClock from "./MagicClock"
 import Multiplication from "./Multiplication"
@@ -45,7 +45,7 @@ const FeatureRenderer = ({
           />
         )
       case Feature.Addition:
-        return <Addition render={seed} />
+        return <AddSub render={seed} />
       default:
         return null
     }

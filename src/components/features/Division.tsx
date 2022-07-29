@@ -12,7 +12,7 @@ type DivisionProps = {
 
 const Division = ({ render, count, onAnswer }: DivisionProps) => {
   const [options, setOptions] = useState<QuizOption[]>([])
-  const [settings, setSettings] = useSettings()
+  const [settings] = useSettings()
 
   const [x, setX] = useState(0)
   const [result, setResult] = useState(0)

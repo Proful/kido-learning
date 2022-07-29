@@ -3,6 +3,7 @@ import { Settings } from "./types"
 
 export const initialSettingsState: Settings = {
   denominator: 5,
+  operation: "add",
 }
 
 type SettingsContext = [

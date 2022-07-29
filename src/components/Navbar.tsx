@@ -2,6 +2,7 @@ import * as Mantine from "@mantine/core"
 import { ActionIcon, Button, Group, Title } from "@mantine/core"
 import { Feature } from "../shared/types"
 import { Settings } from "tabler-icons-react"
+import { useSettings } from "../shared/settingsContext"
 
 type NavbarProps = {
   onFeatureSelected: (feature: Feature) => void
@@ -9,6 +10,7 @@ type NavbarProps = {
 }
 
 const Navbar = ({ onFeatureSelected, onSettingsClicked }: NavbarProps) => {
+  const [settings] = useSettings()
   return (
     <Mantine.Navbar width={{ base: 250, sm: 200, lg: 300 }} height={700} p="xs">
       <Mantine.Navbar.Section>
@@ -49,7 +51,7 @@ const Navbar = ({ onFeatureSelected, onSettingsClicked }: NavbarProps) => {
             variant="subtle"
             onClick={() => onFeatureSelected(Feature.Addition)}
           >
-            Addition
+            {settings.operation === "add" ? "Addition" : "Subtraction"}
           </Button>
         </div>
       </Mantine.Navbar.Section>

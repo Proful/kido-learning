@@ -22,4 +22,5 @@ pub struct Scores {
 #[derive(Debug, Serialize, Deserialize, Default)]
 pub struct Settings {
     pub denominator: u32,
+    pub operation: String,
 }

@@ -1,4 +1,4 @@
-import { Button, TextInput, Title } from "@mantine/core"
+import { Button, Select, TextInput, Title } from "@mantine/core"
 import { saveSettings } from "../backend/core"
 import { useSettings } from "../shared/settingsContext"
 
@@ -10,17 +10,29 @@ const Settings = () => {
   }
 
   return (
-    <div>
+    <div style={{ width: "32%" }}>
       <Title order={4}>Settings</Title>
       <TextInput
         value={settings.denominator}
         label="Denominator"
-        style={{ width: "32%" }}
         onChange={(e) =>
           setSettings({ ...settings, denominator: +e.target.value })
         }
       />
       <br />
+      <Select
+        label="Addition or Subtraction"
+        placeholder="Pick one"
+        data={[
+          { value: "add", label: "Addition" },
+          { value: "subtract", label: "Subtraction" },
+        ]}
+        value={settings.operation}
+        onChange={(value) =>
+          setSettings({ ...settings, operation: value ?? "add" })
+        }
+        mb="xl"
+      />
       <Button variant="outline" onClick={onSave}>
         Save
       </Button>
