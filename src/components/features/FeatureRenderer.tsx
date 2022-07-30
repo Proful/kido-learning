@@ -4,6 +4,7 @@ import AddSub from "./AddSub"
 import Division from "./Division"
 import MagicClock from "./MagicClock"
 import Multiplication from "./Multiplication"
+import TimesTable from "./TimesTable"
 
 type FeatureRendererProps = {
   feature: Feature
@@ -44,8 +45,10 @@ const FeatureRenderer = ({
             onAnswer={(answer) => updateScores(feature, answer)}
           />
         )
-      case Feature.Addition:
+      case Feature.AddSub:
         return <AddSub render={seed} />
+      case Feature.TimesTable:
+        return <TimesTable render={seed} />
       default:
         return null
     }

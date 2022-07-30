@@ -6,7 +6,8 @@ const initScores: Scores = {
   [Feature.Clock]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
   [Feature.Multiplication]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
   [Feature.Division]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
-  [Feature.Addition]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
+  [Feature.AddSub]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
+  [Feature.TimesTable]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
 }
 
 const isEmpty = (scores: Scores) => {
