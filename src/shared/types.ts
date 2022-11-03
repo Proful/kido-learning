@@ -16,6 +16,7 @@ export enum Feature {
   Division = "division",
   AddSub = "addsub",
   TimesTable = "timestable",
+  Fraction = "fraction",
 }
 export interface Scores {
   [Feature.Clock]: Count
@@ -23,6 +24,7 @@ export interface Scores {
   [Feature.Division]: Count
   [Feature.AddSub]: Count //not used
   [Feature.TimesTable]: Count //not used
+  [Feature.Fraction]: Count //not used
 }
 export interface Settings {
   denominator: number
