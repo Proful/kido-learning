@@ -10,12 +10,12 @@
 `rustup update`
 
 ### upgrade tauri cli
-modify Cargo.toml
+modify Cargo.toml => doesn't work
+`cargo install tauri-cli`
 
-
-`cargo tauri info`
 
 ### check tauri version
+`cargo tauri info`
 
 
 ### upgrade all packages

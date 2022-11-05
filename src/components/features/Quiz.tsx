@@ -1,4 +1,4 @@
-import { Paper, Text, RadioGroup, Radio } from "@mantine/core"
+import { Paper, Text, Radio } from "@mantine/core"
 import { useEffect, useState } from "react"
 import { Answer, Count, QuizOption } from "../../shared/types"
 
@@ -28,7 +28,7 @@ const Quiz = ({ render, count, options, onAnswer }: QuizProps) => {
 
   return (
     <div>
-      <RadioGroup
+      <Radio.Group
         orientation="vertical"
         label={`Which of the following  is correct?`}
         spacing="lg"
@@ -55,7 +55,7 @@ const Quiz = ({ render, count, options, onAnswer }: QuizProps) => {
             disabled={disabled[option.value as keyof typeof disabled]}
           />
         ))}
-      </RadioGroup>
+      </Radio.Group>
       <Paper shadow="md" p="md" mt={"md"} style={{ width: 400 }}>
         <Text>{count[Answer.Correct]} Correct</Text>
         <Text>{count[Answer.Incorrect]} Wrong</Text>
