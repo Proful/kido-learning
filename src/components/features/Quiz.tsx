@@ -34,7 +34,6 @@ const Quiz = ({ render, count, options, onAnswer }: QuizProps) => {
         spacing="lg"
         size="xl"
         value={optionSelected}
-        color={color}
         onChange={(v) => {
           setOptionSelected(v)
           if (v === "A") {
@@ -51,6 +50,7 @@ const Quiz = ({ render, count, options, onAnswer }: QuizProps) => {
           <Radio
             key={index}
             value={option.value}
+            color={color}
             label={option.label}
             disabled={disabled[option.value as keyof typeof disabled]}
           />

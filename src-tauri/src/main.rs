@@ -7,13 +7,21 @@ use std::fs;
 
 use model::{QuizOption, Scores, Settings};
 use rand::prelude::SliceRandom;
-use tauri::generate_handler;
+use tauri::{generate_handler, CustomMenuItem, Menu, MenuItem, Submenu};
 use utils::hh_mm_pair;
+
+use crate::model::Payload;
 
 mod model;
 mod utils;
 
 fn main() {
+    let reset_scores = CustomMenuItem::new("reset_scores", "Reset Scores").into();
+    let submenu = Submenu::new("Edit", Menu::new().add_item(reset_scores));
+    let menu = Menu::new()
+        .add_native_item(MenuItem::Copy) // not sure why needed? without this `Edit` menu not appearing
+        .add_submenu(submenu);
+
     tauri::Builder::default()
         .invoke_handler(generate_handler![
             gen_quiz_options,
@@ -21,6 +29,27 @@ fn main() {
             save_scores,
             save_settings
         ])
+        .menu(menu)
+        .on_menu_event(|event| match event.menu_item_id() {
+            "reset_scores" => {
+                println!("reset scores");
+                let scores = Scores::new();
+                save_scores(scores);
+
+                let main_window = event.window();
+                main_window
+                    .emit(
+                        "reset_scores",
+                        Payload {
+                            message: "Tauri is awesome!".into(),
+                        },
+                    )
+                    .unwrap();
+            }
+            _ => {
+                println!("reset scores");
+            }
+        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
@@ -71,38 +100,4 @@ fn save_scores(scores: Scores) {
 fn save_settings(settings: Settings) {
     let settings = serde_json::to_string(&settings).unwrap();
     fs::write("/tmp/settings.json", settings).unwrap();
-}
-
-#[cfg(test)]
-mod tests {
-    use crate::model::{Count, Scores};
-
-    #[test]
-    fn test_gen_options() {
-        let opts = crate::gen_quiz_options();
-        assert_eq!(opts.len(), 4);
-        dbg!(opts);
-    }
-    #[test]
-    fn test_load_scores() {
-        let scores = crate::load_scores();
-        dbg!(scores);
-    }
-    #[test]
-    fn test_save_scores() {
-        crate::save_scores(Scores {
-            clock: Count {
-                correct: 20,
-                incorrect: 0,
-            },
-            multiplication: Count {
-                correct: 0,
-                incorrect: 10,
-            },
-            division: Count {
-                correct: 20,
-                incorrect: 30,
-            },
-        });
-    }
 }

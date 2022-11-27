@@ -2,6 +2,7 @@ import { useCallback } from "react"
 import { Answer, Feature, Scores } from "../../shared/types"
 import AddSub from "./AddSub"
 import Division from "./Division"
+import Fraction from "./Fraction"
 import MagicClock from "./MagicClock"
 import Multiplication from "./Multiplication"
 import TimesTable from "./TimesTable"
@@ -49,6 +50,11 @@ const FeatureRenderer = ({
         return <AddSub render={seed} />
       case Feature.TimesTable:
         return <TimesTable render={seed} />
+      case Feature.Fraction:
+        return <Fraction render={seed}
+          count={scores[feature]}
+          onAnswer={(answer) => updateScores(feature, answer)}
+        />
       default:
         return null
     }

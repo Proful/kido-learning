@@ -8,6 +8,7 @@ const initScores: Scores = {
   [Feature.Division]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
   [Feature.AddSub]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
   [Feature.TimesTable]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
+  [Feature.Fraction]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
 }
 
 const isEmpty = (scores: Scores) => {
@@ -16,7 +17,7 @@ const isEmpty = (scores: Scores) => {
   )
 }
 
-const useScores = (): [Scores, (feature: Feature, answer: Answer) => void] => {
+const useScores = (): [Scores, (feature: Feature, answer: Answer) => void, () => void] => {
   const [scores, setScores] = useState<Scores>(initScores)
 
   useEffect(() => {
@@ -40,7 +41,11 @@ const useScores = (): [Scores, (feature: Feature, answer: Answer) => void] => {
     })
   }
 
-  return [scores, updateScores]
+  const resetScores = () => {
+    setScores(initScores)
+  }
+
+  return [scores, updateScores, resetScores]
 }
 
 export default useScores

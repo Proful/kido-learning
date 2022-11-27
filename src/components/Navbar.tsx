@@ -62,6 +62,14 @@ const Navbar = ({ onFeatureSelected, onSettingsClicked }: NavbarProps) => {
             Times Table
           </Button>
         </div>
+        <div>
+          <Button
+            variant="subtle"
+            onClick={() => onFeatureSelected(Feature.Fraction)}
+          >
+            Fraction
+          </Button>
+        </div>
       </Mantine.Navbar.Section>
     </Mantine.Navbar>
   )
