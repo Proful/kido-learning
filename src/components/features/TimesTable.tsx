@@ -1,16 +1,16 @@
-import { Table, Title } from "@mantine/core"
-import { useEffect, useState } from "react"
-import { getRndInRange } from "../../shared/utils"
+import { Table, Title } from "@mantine/core";
+import { useEffect, useState } from "react";
+import { getRndInRange } from "../../shared/utils";
 type TimesTableProps = {
-  render: number
-}
+  render: number;
+};
 
 const TimesTable = ({ render }: TimesTableProps) => {
-  const [x, setX] = useState(2)
+  const [x, setX] = useState(2);
 
   useEffect(() => {
-    setX(getRndInRange(2, 12, [x, 1]))
-  }, [render])
+    setX(getRndInRange(2, 12, [x, 1]));
+  }, [render]);
 
   const rows = [...Array(6).keys()]
     .map((i) => i + 1)
@@ -33,7 +33,7 @@ const TimesTable = ({ render }: TimesTableProps) => {
           {x}x{n + 6}={x * (n + 6)}
         </td>
       </tr>
-    ))
+    ));
 
   return (
     <>
@@ -42,7 +42,7 @@ const TimesTable = ({ render }: TimesTableProps) => {
         <tbody>{rows}</tbody>
       </Table>
     </>
-  )
-}
+  );
+};
 
-export default TimesTable
+export default TimesTable;

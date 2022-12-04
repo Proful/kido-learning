@@ -1,30 +1,30 @@
-import { Paper, Text, Radio } from "@mantine/core"
-import { useEffect, useState } from "react"
-import { Answer, Count, QuizOption } from "../../shared/types"
+import { Paper, Radio, Text } from "@mantine/core";
+import { useEffect, useState } from "react";
+import { Answer, Count, QuizOption } from "../../shared/types";
 
 const initDisabled = {
   "A": false,
   "B": false,
   "C": false,
   "D": false,
-}
+};
 
 type QuizProps = {
-  render: number
-  count: Count
-  options: QuizOption[]
-  onAnswer: (answer: Answer) => void
-}
+  render: number;
+  count: Count;
+  options: QuizOption[];
+  onAnswer: (answer: Answer) => void;
+};
 
 const Quiz = ({ render, count, options, onAnswer }: QuizProps) => {
-  const [color, setColor] = useState("")
-  const [optionSelected, setOptionSelected] = useState("")
-  const [disabled, setDisabled] = useState(initDisabled)
+  const [color, setColor] = useState("");
+  const [optionSelected, setOptionSelected] = useState("");
+  const [disabled, setDisabled] = useState(initDisabled);
 
   useEffect(() => {
-    setDisabled(initDisabled)
-    setOptionSelected("")
-  }, [render])
+    setDisabled(initDisabled);
+    setOptionSelected("");
+  }, [render]);
 
   return (
     <div>
@@ -35,14 +35,14 @@ const Quiz = ({ render, count, options, onAnswer }: QuizProps) => {
         size="xl"
         value={optionSelected}
         onChange={(v) => {
-          setOptionSelected(v)
+          setOptionSelected(v);
           if (v === "A") {
-            setDisabled({ "A": false, "B": true, "C": true, "D": true })
-            onAnswer(Answer.Correct)
-            setColor("teal")
+            setDisabled({ "A": false, "B": true, "C": true, "D": true });
+            onAnswer(Answer.Correct);
+            setColor("teal");
           } else {
-            onAnswer(Answer.Incorrect)
-            setColor("red")
+            onAnswer(Answer.Incorrect);
+            setColor("red");
           }
         }}
       >
@@ -61,7 +61,7 @@ const Quiz = ({ render, count, options, onAnswer }: QuizProps) => {
         <Text>{count[Answer.Incorrect]} Wrong</Text>
       </Paper>
     </div>
-  )
-}
+  );
+};
 
-export default Quiz
+export default Quiz;

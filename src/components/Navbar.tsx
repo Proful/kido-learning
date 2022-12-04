@@ -1,16 +1,16 @@
-import * as Mantine from "@mantine/core"
-import { ActionIcon, Button, Group, Title } from "@mantine/core"
-import { Feature } from "../shared/types"
-import { Settings } from "tabler-icons-react"
-import { useSettings } from "../shared/settingsContext"
+import * as Mantine from "@mantine/core";
+import { ActionIcon, Button, Group, Title } from "@mantine/core";
+import { Feature } from "../shared/types";
+import { Settings } from "tabler-icons-react";
+import { useSettings } from "../shared/settingsContext";
 
 type NavbarProps = {
-  onFeatureSelected: (feature: Feature) => void
-  onSettingsClicked: () => void
-}
+  onFeatureSelected: (feature: Feature) => void;
+  onSettingsClicked: () => void;
+};
 
 const Navbar = ({ onFeatureSelected, onSettingsClicked }: NavbarProps) => {
-  const [settings] = useSettings()
+  const [settings] = useSettings();
   return (
     <Mantine.Navbar width={{ base: 250, sm: 200, lg: 300 }} height={700} p="xs">
       <Mantine.Navbar.Section>
@@ -25,7 +25,8 @@ const Navbar = ({ onFeatureSelected, onSettingsClicked }: NavbarProps) => {
         <div>
           <Button
             variant="subtle"
-            onClick={() => onFeatureSelected(Feature.Clock)}
+            onClick={() =>
+              onFeatureSelected(Feature.Clock)}
           >
             Clock
           </Button>
@@ -33,7 +34,8 @@ const Navbar = ({ onFeatureSelected, onSettingsClicked }: NavbarProps) => {
         <div>
           <Button
             variant="subtle"
-            onClick={() => onFeatureSelected(Feature.Multiplication)}
+            onClick={() =>
+              onFeatureSelected(Feature.Multiplication)}
           >
             Multiplication
           </Button>
@@ -41,7 +43,8 @@ const Navbar = ({ onFeatureSelected, onSettingsClicked }: NavbarProps) => {
         <div>
           <Button
             variant="subtle"
-            onClick={() => onFeatureSelected(Feature.Division)}
+            onClick={() =>
+              onFeatureSelected(Feature.Division)}
           >
             Division
           </Button>
@@ -72,7 +75,7 @@ const Navbar = ({ onFeatureSelected, onSettingsClicked }: NavbarProps) => {
         </div>
       </Mantine.Navbar.Section>
     </Mantine.Navbar>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

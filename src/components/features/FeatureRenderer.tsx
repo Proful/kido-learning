@@ -1,18 +1,18 @@
-import { useCallback } from "react"
-import { Answer, Feature, Scores } from "../../shared/types"
-import AddSub from "./AddSub"
-import Division from "./Division"
-import Fraction from "./Fraction"
-import MagicClock from "./MagicClock"
-import Multiplication from "./Multiplication"
-import TimesTable from "./TimesTable"
+import { useCallback } from "react";
+import { Answer, Feature, Scores } from "../../shared/types";
+import AddSub from "./AddSub";
+import Division from "./Division";
+import Fraction from "./Fraction";
+import MagicClock from "./MagicClock";
+import Multiplication from "./Multiplication";
+import TimesTable from "./TimesTable";
 
 type FeatureRendererProps = {
-  feature: Feature
-  seed: number
-  scores: Scores
-  updateScores: (feature: Feature, answer: Answer) => void
-}
+  feature: Feature;
+  seed: number;
+  scores: Scores;
+  updateScores: (feature: Feature, answer: Answer) => void;
+};
 
 const FeatureRenderer = ({
   feature,
@@ -29,7 +29,7 @@ const FeatureRenderer = ({
             count={scores[feature]}
             onAnswer={(answer) => updateScores(feature, answer)}
           />
-        )
+        );
       case Feature.Multiplication:
         return (
           <Multiplication
@@ -37,7 +37,7 @@ const FeatureRenderer = ({
             count={scores[feature]}
             onAnswer={(answer) => updateScores(feature, answer)}
           />
-        )
+        );
       case Feature.Division:
         return (
           <Division
@@ -45,22 +45,25 @@ const FeatureRenderer = ({
             count={scores[feature]}
             onAnswer={(answer) => updateScores(feature, answer)}
           />
-        )
+        );
       case Feature.AddSub:
-        return <AddSub render={seed} />
+        return <AddSub render={seed} />;
       case Feature.TimesTable:
-        return <TimesTable render={seed} />
+        return <TimesTable render={seed} />;
       case Feature.Fraction:
-        return <Fraction render={seed}
-          count={scores[feature]}
-          onAnswer={(answer) => updateScores(feature, answer)}
-        />
+        return (
+          <Fraction
+            render={seed}
+            count={scores[feature]}
+            onAnswer={(answer) => updateScores(feature, answer)}
+          />
+        );
       default:
-        return null
+        return null;
     }
-  }, [feature, seed, scores])
+  }, [feature, seed, scores]);
 
-  return <>{renderContent()}</>
-}
+  return <>{renderContent()}</>;
+};
 
-export default FeatureRenderer
+export default FeatureRenderer;
