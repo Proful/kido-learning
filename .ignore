@@ -1,0 +1,12 @@
+*.d.ts
+*.node.json
+*.svg
+*.lock
+*.png
+*.ico
+*.icns
+vite.config.ts
+tsconfig.json
+build.rs
+struct_enum_index.rs
+index.html

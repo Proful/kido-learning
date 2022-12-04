@@ -59,7 +59,9 @@
         "height": 700,
         "resizable": true,
         "title": "Kido Learning App",
-        "width": 800
+        "width": 800,
+        "x": 650,
+        "y": 30
       }
     ]
   }

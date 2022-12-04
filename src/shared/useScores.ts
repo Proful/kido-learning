@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
-import { loadScores, saveScores } from "../backend/core"
-import { Answer, Feature, Scores } from "./types"
+import { useEffect, useState } from "react";
+import { loadScores, saveScores } from "../backend/core";
+import { Answer, Feature, Scores } from "./types";
 
 const initScores: Scores = {
   [Feature.Clock]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
@@ -9,27 +9,31 @@ const initScores: Scores = {
   [Feature.AddSub]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
   [Feature.TimesTable]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
   [Feature.Fraction]: { [Answer.Correct]: 0, [Answer.Incorrect]: 0 },
-}
+};
 
 const isEmpty = (scores: Scores) => {
   return Object.values(scores).every(
-    (score) => score[Answer.Correct] === 0 && score[Answer.Incorrect] === 0
-  )
-}
+    (score) => score[Answer.Correct] === 0 && score[Answer.Incorrect] === 0,
+  );
+};
 
-const useScores = (): [Scores, (feature: Feature, answer: Answer) => void, () => void] => {
-  const [scores, setScores] = useState<Scores>(initScores)
+const useScores = (): [
+  Scores,
+  (feature: Feature, answer: Answer) => void,
+  () => void,
+] => {
+  const [scores, setScores] = useState<Scores>(initScores);
 
   useEffect(() => {
-    loadScores().then(setScores)
-  }, [])
+    loadScores().then(setScores);
+  }, []);
 
   useEffect(() => {
     if (!isEmpty(scores)) {
       //BUG: redundant write first time
-      saveScores(scores)
+      saveScores(scores);
     }
-  }, [scores])
+  }, [scores]);
 
   const updateScores = (feature: Feature, answer: Answer) => {
     setScores({
@@ -38,14 +42,14 @@ const useScores = (): [Scores, (feature: Feature, answer: Answer) => void, () =>
         ...scores[feature],
         [answer]: scores[feature][answer] + 1,
       },
-    })
-  }
+    });
+  };
 
   const resetScores = () => {
-    setScores(initScores)
-  }
+    setScores(initScores);
+  };
 
-  return [scores, updateScores, resetScores]
-}
+  return [scores, updateScores, resetScores];
+};
 
-export default useScores
+export default useScores;
